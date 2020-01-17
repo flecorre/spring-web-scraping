@@ -1,7 +1,9 @@
 package com.flecorre.webscraper.service.manga;
 
-import java.util.Map;
+import com.flecorre.webscraper.configuration.YAMLConfig;
+
+import java.util.List;
 
 public interface MangaScraperService {
-    Map<String, Integer> scrapeData();
+    List<YAMLConfig.Manga> scrapeData();
 }

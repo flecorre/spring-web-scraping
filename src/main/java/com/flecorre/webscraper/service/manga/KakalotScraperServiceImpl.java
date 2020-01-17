@@ -24,34 +24,35 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
     }
 
     @Override
-    public Map<String, Integer> scrapeData() {
+    public List<YAMLConfig.Manga> scrapeData() {
         final List<YAMLConfig.Manga> mangas = new ArrayList<>(yamlConfig.getMangas());
 
-        Map<String, Integer> newChapters = mangas.stream()
+        List<YAMLConfig.Manga> newChapters = mangas.stream()
                 .map(mg -> getLastChapter(mg))
                 .filter(Objects::nonNull)
-                .collect(Collectors.toMap(YAMLConfig.Manga::getTitle, YAMLConfig.Manga::getChapter));
+                .collect(Collectors.toList());
         LOGGER.info(newChapters.toString());
         return newChapters;
     }
 
     private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
         try {
-            Document document = Jsoup.connect(manga.getUrl()).userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
+            Document document = Jsoup.connect(manga.getUrl()).userAgent(yamlConfig.getUserAgent())
                     .timeout(5000)
                     .get();
-            String fullChapterName = document.select("ul.row-content-chapter > li.a-h > a.chapter-name").first().attr("href");
-            String[] chars = fullChapterName.split("_");
+            String fullChapterUrl = document.select("ul.row-content-chapter > li.a-h > a.chapter-name").first().attr("href");
+            String[] chars = fullChapterUrl.split("_");
             String strChapterFound = chars[chars.length - 1];
             if (!strChapterFound.contains(".")) {
                 int chapterFound = Integer.parseInt(strChapterFound);
                 if (manga.getChapter() < chapterFound) {
                     updateChapterInList(manga, chapterFound);
-                    return YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).build();
+                    return YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).chapterUrl(fullChapterUrl).build();
                 }
             }
             return null;
         } catch (IOException e) {
+            LOGGER.error(e + " " + manga.getUrl());
             return null;
         }
     }

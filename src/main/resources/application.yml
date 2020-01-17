@@ -1,5 +1,7 @@
 app:
     user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36
+    chat-id: 
+    telegram-token:
     mangas:
       - title: Fire Force
         url: https://manganelo.com/manga/xqfw3591566265037
@@ -9,7 +11,7 @@ app:
         chapter: 83
       - title: The God of High School
         url: https://manganelo.com/manga/read_the_god_of_high_school_manga
-        chapter: 446
+        chapter: 447
       - title: UQ Holder!
         url: https://manganelo.com/manga/read_uq_holder_manga_online_for_free
         chapter: 168
@@ -75,10 +77,10 @@ app:
         chapter: 55
       - title: Fairy Tail 100 Years Quest
         url: https://manganelo.com/manga/uv917720
-        chapter: 46
+        chapter: 47
       - title: Tomb Raider King
         url: https://manganelo.com/manga/eg919734
         chapter: 35
       - title: Solo Leveling
         url: https://manganelo.com/manga/pn918005
-        chapter: 101
+        chapter: 102
