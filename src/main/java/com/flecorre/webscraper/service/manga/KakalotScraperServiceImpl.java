@@ -1,6 +1,6 @@
-package com.flecorre.webscraper.service;
+package com.flecorre.webscraper.service.manga;
 
-import com.flecorre.webscraper.configuration.MangaProperties;
+import com.flecorre.webscraper.configuration.YAMLConfig;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -13,29 +13,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("manga")
-public class ScraperServiceMangaImpl implements ScraperService {
+public class KakalotScraperServiceImpl implements MangaScraperService {
 
-    private final MangaProperties mangaProperties;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScraperServiceMangaImpl.class);
+    private final YAMLConfig yamlConfig;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KakalotScraperServiceImpl.class);
 
     @Autowired
-    public ScraperServiceMangaImpl(MangaProperties mangaProperties) {
-        this.mangaProperties = mangaProperties;
+    public KakalotScraperServiceImpl(YAMLConfig YAMLConfig) {
+        this.yamlConfig = YAMLConfig;
     }
 
     @Override
     public Map<String, Integer> scrapeData() {
-        final List<MangaProperties.Manga> mangas = new ArrayList<>(mangaProperties.getMangas());
+        final List<YAMLConfig.Manga> mangas = new ArrayList<>(yamlConfig.getMangas());
 
         Map<String, Integer> newChapters = mangas.stream()
                 .map(mg -> getLastChapter(mg))
                 .filter(Objects::nonNull)
-                .collect(Collectors.toMap(MangaProperties.Manga::getTitle, MangaProperties.Manga::getChapter));
+                .collect(Collectors.toMap(YAMLConfig.Manga::getTitle, YAMLConfig.Manga::getChapter));
         LOGGER.info(newChapters.toString());
         return newChapters;
     }
 
-    private MangaProperties.Manga getLastChapter(MangaProperties.Manga manga) {
+    private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
         try {
             Document document = Jsoup.connect(manga.getUrl()).userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
                     .timeout(5000)
@@ -47,7 +47,7 @@ public class ScraperServiceMangaImpl implements ScraperService {
                 int chapterFound = Integer.parseInt(strChapterFound);
                 if (manga.getChapter() < chapterFound) {
                     updateChapterInList(manga, chapterFound);
-                    return MangaProperties.Manga.builder().title(manga.getTitle()).chapter(chapterFound).build();
+                    return YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).build();
                 }
             }
             return null;
@@ -56,8 +56,8 @@ public class ScraperServiceMangaImpl implements ScraperService {
         }
     }
 
-    private void updateChapterInList(MangaProperties.Manga manga, int chapterFound) {
-        for (MangaProperties.Manga mg : mangaProperties.getMangas()) {
+    private void updateChapterInList(YAMLConfig.Manga manga, int chapterFound) {
+        for (YAMLConfig.Manga mg : yamlConfig.getMangas()) {
             if (mg.getTitle().equals(manga.getTitle()) && mg.getChapter() < chapterFound) {
                 mg.setChapter(chapterFound);
             }
