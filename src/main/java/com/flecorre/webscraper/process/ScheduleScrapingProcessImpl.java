@@ -20,9 +20,6 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Autowired
-    private MangaProperties mangaProperties;
-
-    @Autowired
     public ScheduleScrapingProcessImpl(@Qualifier("manga") ScraperService manga) {
         this.manga = manga;
     }
@@ -31,7 +28,6 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     @Scheduled(fixedRate = 10000)
     public void scheduleWithFixedDelay() {
         manga.scrapeData();
-        LOGGER.info(mangaProperties.getMangas().toString());
         LOGGER.info("Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
     }
 }

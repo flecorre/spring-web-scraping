@@ -3,6 +3,8 @@ package com.flecorre.webscraper.service;
 import com.flecorre.webscraper.configuration.MangaProperties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class ScraperServiceMangaImpl implements ScraperService {
 
     private final MangaProperties mangaProperties;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScraperServiceMangaImpl.class);
 
     @Autowired
     public ScraperServiceMangaImpl(MangaProperties mangaProperties) {
@@ -28,6 +31,7 @@ public class ScraperServiceMangaImpl implements ScraperService {
                 .map(mg -> getLastChapter(mg))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toMap(MangaProperties.Manga::getTitle, MangaProperties.Manga::getChapter));
+        LOGGER.info(newChapters.toString());
         return newChapters;
     }
 
