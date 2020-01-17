@@ -1,5 +1,7 @@
 package com.flecorre.webscraper.service.torrent;
 
+import java.util.List;
+
 public interface TorrentScraperService {
-    String scrapeData();
+    List<String> scrapeData();
 }

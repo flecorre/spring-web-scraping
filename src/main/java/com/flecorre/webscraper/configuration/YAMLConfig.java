@@ -15,6 +15,8 @@ import java.util.List;
 public class YAMLConfig {
 
     private String userAgent;
+    private String chatId;
+    private String telegramToken;
     private List<Manga> mangas = new ArrayList<>();
 
     @Data
@@ -25,6 +27,7 @@ public class YAMLConfig {
         private String title;
         private String url;
         private int chapter;
+        private String chapterUrl;
     }
 
     public List<Manga> getMangas() {
@@ -37,5 +40,21 @@ public class YAMLConfig {
 
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getTelegramToken() {
+        return telegramToken;
+    }
+
+    public void setTelegramToken(String telegramToken) {
+        this.telegramToken = telegramToken;
     }
 }
