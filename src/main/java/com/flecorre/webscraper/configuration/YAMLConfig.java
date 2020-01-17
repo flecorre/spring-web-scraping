@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Configuration
 @ConfigurationProperties("app")
-public class MangaProperties {
+public class YAMLConfig {
 
+    private String userAgent;
     private List<Manga> mangas = new ArrayList<>();
 
     @Data
@@ -28,5 +29,13 @@ public class MangaProperties {
 
     public List<Manga> getMangas() {
         return mangas;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 }

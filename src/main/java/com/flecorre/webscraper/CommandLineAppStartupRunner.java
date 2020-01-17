@@ -1,6 +1,5 @@
 package com.flecorre.webscraper;
 
-import com.flecorre.webscraper.configuration.MangaProperties;
 import com.flecorre.webscraper.process.ScheduleScrapingProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
