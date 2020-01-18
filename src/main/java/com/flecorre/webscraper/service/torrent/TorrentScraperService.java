@@ -1,7 +1,12 @@
 package com.flecorre.webscraper.service.torrent;
 
+import com.flecorre.webscraper.domain.Movie;
+
 import java.util.List;
 
 public interface TorrentScraperService {
-    List<String> scrapeData();
+
+    List<Movie> scrapeData();
+
+    void fetchDataFromOMDB(Movie movie);
 }
