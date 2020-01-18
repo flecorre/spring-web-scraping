@@ -33,11 +33,11 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     @Override
     @Scheduled(fixedRate = 100000000, initialDelay = 5000)
     public void scheduleScrappingWithFixedDelay() {
-        List<YAMLConfig.Manga> mangaList = mangaService.scrapeData();
-        if (!mangaList.isEmpty()) {
-            telegramService.sendMangaUpdate(mangaList);
-        }
-        //torrentService.scrapeData();
+//        List<YAMLConfig.Manga> mangaList = mangaService.scrapeData();
+//        if (!mangaList.isEmpty()) {
+//            telegramService.sendMangaUpdate(mangaList);
+//        }
+        torrentService.scrapeData();
         LOGGER.info("SCRAPPING DONE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
     }
 }

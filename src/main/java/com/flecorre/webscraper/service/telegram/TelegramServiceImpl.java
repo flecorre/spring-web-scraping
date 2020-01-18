@@ -31,6 +31,23 @@ public class TelegramServiceImpl implements TelegramService {
     @Override
     public SendResponse sendTorrentUpdate(String message) {
 
+        bot.setUpdatesListener(new UpdatesListener() {
+            @Override
+            public int process(List<Update> updates) {
+                for (Update update : updates) {
+                    System.out.println(update.callbackQuery().data());
+                }
+                return UpdatesListener.CONFIRMED_UPDATES_ALL;
+            }
+        });
+
+        SendMessage request = new SendMessage(yamlConfig.getChatId(), "TEST2")
+                .parseMode(ParseMode.HTML)
+                .disableWebPagePreview(true)
+                .replyMarkup(new InlineKeyboardMarkup(new InlineKeyboardButton[]
+                        {new InlineKeyboardButton("DOWNLOAD").callbackData("test")}));
+        bot.execute(request);
+
         return null;
     }
 
