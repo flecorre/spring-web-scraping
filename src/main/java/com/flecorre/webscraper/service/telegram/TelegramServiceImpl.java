@@ -1,6 +1,7 @@
 package com.flecorre.webscraper.service.telegram;
 
 import com.flecorre.webscraper.configuration.YAMLConfig;
+import com.flecorre.webscraper.domain.Movie;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
@@ -29,8 +30,8 @@ public class TelegramServiceImpl implements TelegramService {
     }
 
     @Override
-    public SendResponse sendTorrentUpdate(String message) {
-
+    public SendResponse sendMovieUpdate(List<Movie> movieList) {
+        String movieListAsHTML = getMovieListAsHTML(movieList);
         bot.setUpdatesListener(new UpdatesListener() {
             @Override
             public int process(List<Update> updates) {
@@ -41,7 +42,7 @@ public class TelegramServiceImpl implements TelegramService {
             }
         });
 
-        SendMessage request = new SendMessage(yamlConfig.getChatId(), "TEST2")
+        SendMessage request = new SendMessage(yamlConfig.getChatId(), movieListAsHTML)
                 .parseMode(ParseMode.HTML)
                 .disableWebPagePreview(true)
                 .replyMarkup(new InlineKeyboardMarkup(new InlineKeyboardButton[]
@@ -71,6 +72,19 @@ public class TelegramServiceImpl implements TelegramService {
                     .append(" - ")
                     .append(manga.getChapter())
                     .append("</a>")
+                    .append("\n");
+        }
+        return sb.toString();
+    }
+
+    private String getMovieListAsHTML(List<Movie> movieList) {
+        StringBuilder sb = new StringBuilder();
+        for (Movie movie : movieList) {
+            sb.append("<img src=")
+                    .append("\"")
+                    .append(movie.getPoster())
+                    .append("\"")
+                    .append(">")
                     .append("\n");
         }
         return sb.toString();

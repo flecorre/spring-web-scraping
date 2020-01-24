@@ -28,7 +28,7 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
         final List<YAMLConfig.Manga> mangas = new ArrayList<>(yamlConfig.getMangas());
 
         List<YAMLConfig.Manga> newChapters = mangas.stream()
-                .map(mg -> getLastChapter(mg))
+                .map(this::getLastChapter)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         LOGGER.info(newChapters.toString());
