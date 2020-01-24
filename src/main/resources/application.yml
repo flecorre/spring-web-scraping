@@ -1,8 +1,8 @@
 app:
     user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36
-    chat-id: 1042796172
-    telegram-token: 731112937:AAF3L4ClUvhB3qB60qfvkK-xjdkx3LwhM6o
-    omdb-key: cc213968
+    chat-id:
+    telegram-token:
+    omdb-key: 
     yggtorrent-exclus: https://www2.yggtorrent.ws/torrents/exclus
     mangas:
       - title: Fire Force

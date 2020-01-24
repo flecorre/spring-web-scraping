@@ -1,6 +1,5 @@
 package com.flecorre.webscraper.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 
