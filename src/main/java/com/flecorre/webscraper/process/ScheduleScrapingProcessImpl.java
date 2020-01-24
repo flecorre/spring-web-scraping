@@ -1,6 +1,6 @@
 package com.flecorre.webscraper.process;
 
-import com.flecorre.webscraper.configuration.YAMLConfig;
+import com.flecorre.webscraper.domain.Movie;
 import com.flecorre.webscraper.service.manga.MangaScraperService;
 import com.flecorre.webscraper.service.telegram.TelegramService;
 import com.flecorre.webscraper.service.torrent.TorrentScraperService;
@@ -37,7 +37,10 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
 //        if (!mangaList.isEmpty()) {
 //            telegramService.sendMangaUpdate(mangaList);
 //        }
-        torrentService.scrapeData();
+        List<Movie> movieList = torrentService.scrapeData();
+        if (!movieList.isEmpty()) {
+            telegramService.sendMovieUpdate(movieList);
+        }
         LOGGER.info("SCRAPPING DONE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
     }
 }
