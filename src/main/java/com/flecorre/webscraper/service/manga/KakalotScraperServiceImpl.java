@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service("kakalotService")
 public class KakalotScraperServiceImpl implements MangaScraperService {
@@ -22,11 +25,19 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
     }
 
     @Override
-    public YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
+    public List<YAMLConfig.Manga> scrapeData(List<YAMLConfig.Manga> mangaList) {
+        List<YAMLConfig.Manga> newChapters = mangaList.stream()
+                .filter(mg -> !mg.isFound())
+                .map(this::getLastChapter)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        return newChapters;
+    }
+
+    private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
         if (manga.getKakalotUrl() == null) {
             return null;
         }
-
         YAMLConfig.Manga newManga = null;
         try {
             Document document = Jsoup.connect(manga.getKakalotUrl()).userAgent(yamlConfig.getUserAgent())

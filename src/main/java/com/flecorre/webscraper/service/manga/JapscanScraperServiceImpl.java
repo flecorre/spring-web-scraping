@@ -8,14 +8,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 
 @Service("japscanService")
 public class JapscanScraperServiceImpl implements MangaScraperService {
 
     private final YAMLConfig yamlConfig;
+    private WebDriver driver;
 
     private static final String CHROME_DRIVER = "webdriver.chrome.driver";
-    private static final String CHROME_DRIVER_PATH = "../chromedriver.exe";
     private static final String CSS_SELECTOR_LAST_CHAPTER = "#collapse-1 > div:nth-child(1) > a";
 
     @Autowired
@@ -24,20 +28,29 @@ public class JapscanScraperServiceImpl implements MangaScraperService {
     }
 
     @Override
-    public YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
+    public List<YAMLConfig.Manga> scrapeData(List<YAMLConfig.Manga> mangaList) {
+        System.setProperty(CHROME_DRIVER, yamlConfig.getChromedriverPath());
+        this.driver = new ChromeDriver();
+        List<YAMLConfig.Manga> newChapters = mangaList.stream()
+                .filter(mg -> !mg.isFound())
+                .map(this::getLastChapter)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        this.driver.close();
+        this.driver = null;
+        return newChapters;
+    }
+
+    private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
         if (manga.getJapscanUrl() == null) {
             return null;
         }
-
         YAMLConfig.Manga newManga = null;
-        WebDriver driver = null;
         try {
-            System.setProperty(CHROME_DRIVER, CHROME_DRIVER_PATH);
-            driver = new ChromeDriver();
-            driver.get(manga.getJapscanUrl());
+            this.driver.get(manga.getJapscanUrl());
             Thread.sleep(7000);
             WebElement we = driver.findElement(By.cssSelector(CSS_SELECTOR_LAST_CHAPTER));
-            String fullChapterName = we.getText();
+            String fullChapterName = we.getText().toLowerCase();
             String fullChapterUrl = we.getAttribute("href");
             if (!fullChapterName.contains(("raw")) && !fullChapterName.contains("spoiler")) {
                 String[] chars = fullChapterUrl.split("/");
@@ -50,10 +63,6 @@ public class JapscanScraperServiceImpl implements MangaScraperService {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
-            if (driver != null) {
-                driver.close();
-            }
         }
         return newManga;
     }

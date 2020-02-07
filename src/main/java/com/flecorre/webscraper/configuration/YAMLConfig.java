@@ -18,6 +18,7 @@ public class YAMLConfig {
     private String telegramToken;
     private String omdbKey;
     private String yggtorrentExclus;
+    private String chromedriverPath;
     private List<Manga> mangas = new ArrayList<>();
 
     @Data

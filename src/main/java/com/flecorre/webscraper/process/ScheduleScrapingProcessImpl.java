@@ -12,12 +12,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
@@ -40,19 +38,19 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     }
 
     @Override
+    @Scheduled(fixedRate = 100000000, initialDelay = 5000)
     public void scheduleScrappingWithFixedDelay() {
-//        List<YAMLConfig.Manga> newMangas = new ArrayList<>();
-//        newMangas.addAll(japscanService.scrapeData(yamlConfig.getMangas()));
-//        newMangas.addAll(kakalotService.scrapeData(yamlConfig.getMangas()));
-//        if (!newMangas.isEmpty()) {
-//            telegramService.sendMangaUpdate(newMangas);
-//        }
+        List<YAMLConfig.Manga> newMangas = new ArrayList<>();
+        newMangas.addAll(kakalotService.scrapeData(yamlConfig.getMangas()));
+        newMangas.addAll(japscanService.scrapeData(yamlConfig.getMangas()));
+        if (!newMangas.isEmpty()) {
+            telegramService.sendMangaUpdate(newMangas);
+        }
 
-//        List<Movie> movieList = torrentService.scrapeData();
-//        if (!movieList.isEmpty()) {
-//            telegramService.sendMovieUpdate(movieList);
-//        }
-        japscanService.scrapeData(yamlConfig.getMangas());
+        List<Movie> movieList = torrentService.scrapeData();
+        if (!movieList.isEmpty()) {
+            telegramService.sendMovieUpdate(movieList);
+        }
         LOGGER.info("SCRAPPING DONE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
     }
 }
