@@ -3,6 +3,7 @@ package com.flecorre.webscraper.service.torrent;
 import com.flecorre.webscraper.configuration.YAMLConfig;
 import com.flecorre.webscraper.domain.Movie;
 import com.flecorre.webscraper.domain.ResponseOMDB;
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,7 +14,9 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +27,8 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     private final YAMLConfig yamlConfig;
     private final RestTemplate restTemplate;
     private Set<String> movieTitleSet;
+
+    private final static String MOVIE_TITLE_TXT = "../movie_title.txt";
     private final static Logger LOGGER = LoggerFactory.getLogger(YggScraperServiceImpl.class);
 
     public YggScraperServiceImpl(RestTemplateBuilder restTemplateBuilder, YAMLConfig yamlConfig) {
@@ -33,9 +38,6 @@ public class YggScraperServiceImpl implements TorrentScraperService {
 
     @Override
     public List<Movie> scrapeData() {
-        if (movieTitleSet == null) {
-            movieTitleSet = new HashSet<>();
-        }
         List<Movie> newMovieList = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(yamlConfig.getYggtorrentExclus()).userAgent(yamlConfig.getUserAgent())
@@ -56,6 +58,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
                     }
                 }
             }
+            saveNewMovieTitleToFile(this.movieTitleSet);
             LOGGER.info(newMovieList.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,7 +92,8 @@ public class YggScraperServiceImpl implements TorrentScraperService {
         String noParentheses = noDash.replaceAll("[()]", "");
         String noDots = noParentheses.replaceAll("\\.", " ");
         String noDoubleWhiteSpaces = noDots.trim().replaceAll(" +", " ");
-        return noDoubleWhiteSpaces.split("20\\d{2}")[0];
+        String titleWithLastWhiteSpace = noDoubleWhiteSpaces.split("20\\d{2}")[0];
+        return titleWithLastWhiteSpace.replaceAll("\\s+$", "");
     }
 
     private boolean isMovieFormatCorrect(String title) {
@@ -106,4 +110,30 @@ public class YggScraperServiceImpl implements TorrentScraperService {
         return year;
     }
 
+    private void saveNewMovieTitleToFile(Set<String> movieTitleSet) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileOutputStream(MOVIE_TITLE_TXT));
+            for (String title : movieTitleSet) {
+                pw.println(title);
+            }
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @PostConstruct
+    private void initMovieTitleSet() {
+        try {
+            File file = new File(MOVIE_TITLE_TXT);
+            if (file.exists()) {
+                this.movieTitleSet = new HashSet<>(FileUtils.readLines(new File(MOVIE_TITLE_TXT), StandardCharsets.UTF_8));
+            } else {
+                this.movieTitleSet = new HashSet<>();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

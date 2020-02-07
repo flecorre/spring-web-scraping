@@ -26,9 +26,11 @@ public class YAMLConfig {
     @AllArgsConstructor
     public static class Manga {
         private String title;
-        private String url;
+        private String kakalotUrl;
+        private String japscanUrl;
         private int chapter;
-        private String chapterUrl;
+        private String foundChapterUrl;
+        private boolean found;
     }
 
 }

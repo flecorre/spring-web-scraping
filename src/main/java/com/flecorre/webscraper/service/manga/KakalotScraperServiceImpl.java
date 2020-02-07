@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
 
-@Service("manga")
+@Service("kakalotService")
 public class KakalotScraperServiceImpl implements MangaScraperService {
 
     private final YAMLConfig yamlConfig;
@@ -24,20 +22,14 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
     }
 
     @Override
-    public List<YAMLConfig.Manga> scrapeData() {
-        final List<YAMLConfig.Manga> mangas = new ArrayList<>(yamlConfig.getMangas());
+    public YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
+        if (manga.getKakalotUrl() == null) {
+            return null;
+        }
 
-        List<YAMLConfig.Manga> newChapters = mangas.stream()
-                .map(this::getLastChapter)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-        LOGGER.info(newChapters.toString());
-        return newChapters;
-    }
-
-    private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
+        YAMLConfig.Manga newManga = null;
         try {
-            Document document = Jsoup.connect(manga.getUrl()).userAgent(yamlConfig.getUserAgent())
+            Document document = Jsoup.connect(manga.getKakalotUrl()).userAgent(yamlConfig.getUserAgent())
                     .timeout(5000)
                     .get();
             String fullChapterUrl = document.select("ul.row-content-chapter > li.a-h > a.chapter-name").first().attr("href");
@@ -46,22 +38,13 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
             if (!strChapterFound.contains(".")) {
                 int chapterFound = Integer.parseInt(strChapterFound);
                 if (manga.getChapter() < chapterFound) {
-                    updateChapterInList(manga, chapterFound);
-                    return YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).chapterUrl(fullChapterUrl).build();
+                    updateChapterInList(manga, chapterFound, this.yamlConfig.getMangas());
+                    newManga = YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).foundChapterUrl(fullChapterUrl).build();
                 }
             }
-            return null;
         } catch (IOException e) {
-            LOGGER.error(e + " " + manga.getUrl());
-            return null;
+            LOGGER.error(e + " " + manga.getKakalotUrl());
         }
-    }
-
-    private void updateChapterInList(YAMLConfig.Manga manga, int chapterFound) {
-        for (YAMLConfig.Manga mg : yamlConfig.getMangas()) {
-            if (mg.getTitle().equals(manga.getTitle()) && mg.getChapter() < chapterFound) {
-                mg.setChapter(chapterFound);
-            }
-        }
+        return newManga;
     }
 }
