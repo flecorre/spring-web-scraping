@@ -3,11 +3,8 @@ package com.flecorre.webscraper.service.telegram;
 import com.flecorre.webscraper.configuration.YAMLConfig;
 import com.flecorre.webscraper.domain.Movie;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.*;
 import com.pengrad.telegrambot.request.*;
-import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,62 +27,69 @@ public class TelegramServiceImpl implements TelegramService {
     }
 
     @Override
-    public SendResponse sendMovieUpdate(List<Movie> movieList) {
-        String movieListAsHTML = getMovieListAsHTML(movieList);
-        bot.setUpdatesListener(new UpdatesListener() {
-            @Override
-            public int process(List<Update> updates) {
-                for (Update update : updates) {
-                    System.out.println(update.callbackQuery().data());
-                }
-                return UpdatesListener.CONFIRMED_UPDATES_ALL;
-            }
-        });
-
-        SendMessage request = new SendMessage(yamlConfig.getChatId(), movieListAsHTML)
-                .parseMode(ParseMode.HTML)
-                .disableWebPagePreview(true)
-                .replyMarkup(new InlineKeyboardMarkup(new InlineKeyboardButton[]
-                        {new InlineKeyboardButton("DOWNLOAD").callbackData("test")}));
-        bot.execute(request);
-
-        return null;
+    public void sendMovieUpdate(List<Movie> movieList) {
+        for (Movie movie : movieList) {
+            SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMovieToHTML(movie))
+                    .parseMode(ParseMode.HTML)
+                    .disableWebPagePreview(false);
+            bot.execute(msg);
+            LOGGER.info("SEND MOVIE UPDATE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+        }
     }
 
     @Override
     public void sendMangaUpdate(List<YAMLConfig.Manga> mangaList) {
-        String mangaListAsHTML = getMangaListAsHTML(mangaList);
-        SendMessage msg = new SendMessage(yamlConfig.getChatId(), mangaListAsHTML).parseMode(ParseMode.HTML).disableWebPagePreview(true);
-        bot.execute(msg);
-        LOGGER.info("SEND MANGA UPDATE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
+        for (YAMLConfig.Manga manga : mangaList) {
+            SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMangaListToHTML(manga))
+                    .parseMode(ParseMode.HTML)
+                    .disableWebPagePreview(false);
+            bot.execute(msg);
+            LOGGER.info("SEND MANGA UPDATE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+        }
     }
 
-    private String getMangaListAsHTML(List<YAMLConfig.Manga> mangaList) {
+    private String formatMangaListToHTML(YAMLConfig.Manga manga) {
         StringBuilder sb = new StringBuilder();
-        for (YAMLConfig.Manga manga : mangaList) {
-            sb.append("<a href=")
-                    .append("\"")
-                    .append(manga.getChapterUrl())
-                    .append("\"")
-                    .append(" target=\"_blank\">")
-                    .append(manga.getTitle())
-                    .append(" - ")
-                    .append(manga.getChapter())
-                    .append("</a>")
-                    .append("\n");
-        }
+        sb.append("<a href=\"")
+                .append(manga.getFoundChapterUrl())
+                .append("\"")
+                .append(" target=\"_blank\">")
+                .append(manga.getTitle())
+                .append(" - ")
+                .append(manga.getChapter())
+                .append("</a>\n");
         return sb.toString();
     }
 
-    private String getMovieListAsHTML(List<Movie> movieList) {
+    private String formatMovieToHTML(Movie movie) {
         StringBuilder sb = new StringBuilder();
-        for (Movie movie : movieList) {
-            sb.append("<img src=")
-                    .append("\"")
+        if (movie.getPoster() != null) {
+            sb.append("<a href=\"")
                     .append(movie.getPoster())
                     .append("\"")
-                    .append(">")
-                    .append("\n");
+                    .append(" target=\"_blank\">")
+                    .append(movie.getTitle())
+                    .append(" - ")
+                    .append(movie.getYear())
+                    .append("</a>\n")
+                    .append("<i>")
+                    .append(movie.getPlot())
+                    .append("</i>\n")
+                    .append("<a href=\"")
+                    .append(movie.getUrl())
+                    .append("\"")
+                    .append(" target=\"_blank\">")
+                    .append("<b>DOWNLOAD</b>")
+                    .append("</a>\n");
+        } else {
+            sb.append("<a href=\"")
+                    .append(movie.getUrl())
+                    .append("\"")
+                    .append(" target=\"_blank\">")
+                    .append(movie.getTitle())
+                    .append(" - ")
+                    .append(movie.getYear())
+                    .append("</a>\n");
         }
         return sb.toString();
     }

@@ -1,88 +1,109 @@
 app:
     user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36
-    chat-id:
+    chat-id: 
     telegram-token:
-    omdb-key: 
-    yggtorrent-exclus: https://www2.yggtorrent.ws/torrents/exclus
+    omdb-key:
+    yggtorrent-exclus: https://www2.yggtorrent.se/torrents/exclus
     mangas:
       - title: Fire Force
-        url: https://manganelo.com/manga/xqfw3591566265037
+        kakalot-url: https://manganelo.com/manga/xqfw3591566265037
+        japscan-url: https://www.japscan.co/manga/fire-brigade-of-flames/
         chapter: 203
       - title: Jagaaaaaan
-        url: https://manganelo.com/manga/eupo237211575286777
+        kakalot-url: https://manganelo.com/manga/eupo237211575286777
+        japscan-url: https://www.japscan.co/manga/jagaaaaaan/
         chapter: 83
       - title: The God of High School
-        url: https://manganelo.com/manga/read_the_god_of_high_school_manga
+        kakalot-url: https://manganelo.com/manga/read_the_god_of_high_school_manga
+        japscan-url: https://www.japscan.co/manga/the-god-of-high-school/
         chapter: 447
       - title: UQ Holder!
-        url: https://manganelo.com/manga/read_uq_holder_manga_online_for_free
+        kakalot-url: https://manganelo.com/manga/read_uq_holder_manga_online_for_free
+        japscan-url: https://www.japscan.co/manga/uq-holder/
         chapter: 168
       - title: Neverland
-        url: https://manganelo.com/manga/yakusoku_no_neverland
+        kakalot-url: https://manganelo.com/manga/yakusoku_no_neverland
+        japscan-url: https://www.japscan.co/manga/the-promised-neverland/
         chapter: 163
       - title: Record of Ragnarok
-        url: https://manganelo.com/manga/vy918232
+        kakalot-url: https://manganelo.com/manga/vy918232
         chapter: 25
       - title: Radiant
-        url: https://manganelo.com/manga/radiant
+        kakalot-url: https://manganelo.com/manga/radiant
+        japscan-url: https://www.japscan.co/manga/radiant/
         chapter: 92
       - title: Onepunch-Man (ONE)
-        url: https://manganelo.com/manga/read_onepunchman_one
+        kakalot-url: https://manganelo.com/manga/read_onepunchman_one
         chapter: 118
       - title: Onepunch-Man
-        url: https://manganelo.com/manga/read_one_punch_man_manga_online_free3
+        kakalot-url: https://manganelo.com/manga/read_one_punch_man_manga_online_free3
+        japscan-url: https://www.japscan.co/manga/one-punch-man/
         chapter: 125
       - title: One Piece
-        url: https://manganelo.com/manga/read_one_piece_manga_online_free4
-        chapter: 967
+        kakalot-url: https://manganelo.com/manga/read_one_piece_manga_online_free4
+        japscan-url: https://www.japscan.co/manga/one-piece/
+        chapter: 969
       - title: New Prince of Tennis
-        url: https://manganelo.com/manga/new_prince_of_tennis
+        kakalot-url: https://manganelo.com/manga/new_prince_of_tennis
         chapter: 250
       - title: Nanatsu No Taizai
-        url: https://manganelo.com/manga/read_nanatsu_no_taizai_manga_online_free
+        kakalot-url: https://manganelo.com/manga/read_nanatsu_no_taizai_manga_online_free
+        japscan-url: https://www.japscan.co/manga/nanatsu-no-taizai/
         chapter: 338
       - title: My Hero Academia
-        url: https://manganelo.com/manga/read_boku_no_hero_academia_manga
+        kakalot-url: https://manganelo.com/manga/read_boku_no_hero_academia_manga
+        japscan-url: https://www.japscan.co/manga/my-hero-academia/
         chapter: 254
       - title: Demon Slayer
-        url: https://manganelo.com/manga/kimetsu_no_yaiba
+        kakalot-url: https://manganelo.com/manga/kimetsu_no_yaiba
+        japscan-url: https://www.japscan.co/manga/kimetsu-no-yaiba/
         chapter: 189
       - title: Kengan Omega
-        url: https://manganelo.com/manga/cd918233
+        kakalot-url: https://manganelo.com/manga/cd918233
+        japscan-url: https://www.japscan.co/manga/kengan-omega/
         chapter: 46
       - title: Jigokuraku
-        url: https://manganelo.com/manga/jigokuraku_kaku_yuuji
+        kakalot-url: https://manganelo.com/manga/jigokuraku_kaku_yuuji
+        japscan-url: https://www.japscan.co/manga/paradition/
         chapter: 82
       - title: Heart Gear
-        url: https://manganelo.com/manga/no919133
+        kakalot-url: https://manganelo.com/manga/no919133
         chapter: 19
       - title: Hajime No Ippo
-        url: https://manganelo.com/manga/read_hajime_no_ippo_manga
+        kakalot-url: https://manganelo.com/manga/read_hajime_no_ippo_manga
+        japscan-url: https://www.japscan.co/manga/hajime-no-ippo/
         chapter: 1285
       - title: Black Clover
-        url: https://manganelo.com/manga/black_clover
+        kakalot-url: https://manganelo.com/manga/black_clover
+        japscan-url: https://www.japscan.co/manga/black-clover/
         chapter: 235
       - title: Boruto
-        url: https://manganelo.com/manga/boruto_naruto_next_generations
+        kakalot-url: https://manganelo.com/manga/boruto_naruto_next_generations
+        japscan-url: https://www.japscan.co/manga/boruto/
         chapter: 41
       - title: Chainsaw Man
-        url: https://manganelo.com/manga/ix917953
+        kakalot-url: https://manganelo.com/manga/ix917953
+        japscan-url: https://www.japscan.co/manga/chainsaw-man/
         chapter: 53
       - title: Dai Dark
-        url: https://manganelo.com/manga/sg919827
+        kakalot-url: https://manganelo.com/manga/sg919827
         chapter: 8
       - title: Dr Stone
-        url: https://manganelo.com/manga/dr_stone
+        kakalot-url: https://manganelo.com/manga/dr_stone
+        japscan-url: https://www.japscan.co/manga/dr-stone/
         chapter: 134
       - title: Dragon Ball Super
-        url: https://manganelo.com/manga/dragon_ball_super
+        kakalot-url: https://manganelo.com/manga/dragon_ball_super
+        japscan-url: https://www.japscan.co/manga/dragon-ball-super/
         chapter: 55
       - title: Fairy Tail 100 Years Quest
-        url: https://manganelo.com/manga/uv917720
+        kakalot-url: https://manganelo.com/manga/uv917720
+        japscan-url: https://www.japscan.co/manga/fairy-tail-100-years-quest/
         chapter: 47
       - title: Tomb Raider King
-        url: https://manganelo.com/manga/eg919734
+        kakalot-url: https://manganelo.com/manga/eg919734
         chapter: 35
       - title: Solo Leveling
-        url: https://manganelo.com/manga/pn918005
-        chapter: 102
+        kakalot-url: https://manganelo.com/manga/pn918005
+        japscan-url: https://www.japscan.co/manga/solo-leveling/
+        chapter: 103
