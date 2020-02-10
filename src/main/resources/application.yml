@@ -4,6 +4,7 @@ app:
     telegram-token:
     omdb-key:
     yggtorrent-exclus: https://www2.yggtorrent.se/torrents/exclus
+    movie-list: ../movies.txt
     chromedriver-path: ../chromedriver.exe
     mangas:
       - title: Fire Force
@@ -25,21 +26,21 @@ app:
       - title: Neverland
         kakalot-url: https://manganelo.com/manga/yakusoku_no_neverland
         japscan-url: https://www.japscan.co/manga/the-promised-neverland/
-        chapter: 165
+        chapter: 166
       - title: Record of Ragnarok
         kakalot-url: https://manganelo.com/manga/vy918232
         chapter: 27
       - title: Radiant
         kakalot-url: https://manganelo.com/manga/radiant
         japscan-url: https://www.japscan.co/manga/radiant/
-        chapter: 93
+        chapter: 94
       - title: Onepunch-Man (ONE)
         kakalot-url: https://manganelo.com/manga/read_onepunchman_one
         chapter: 121
       - title: Onepunch-Man
         kakalot-url: https://manganelo.com/manga/read_one_punch_man_manga_online_free3
         japscan-url: https://www.japscan.co/manga/one-punch-man/
-        chapter: 182
+        chapter: 183
       - title: One Piece
         kakalot-url: https://manganelo.com/manga/read_one_piece_manga_online_free4
         japscan-url: https://www.japscan.co/manga/one-piece/
@@ -54,11 +55,11 @@ app:
       - title: My Hero Academia
         kakalot-url: https://manganelo.com/manga/read_boku_no_hero_academia_manga
         japscan-url: https://www.japscan.co/manga/my-hero-academia/
-        chapter: 259
+        chapter: 260
       - title: Demon Slayer
         kakalot-url: https://manganelo.com/manga/kimetsu_no_yaiba
         japscan-url: https://www.japscan.co/manga/kimetsu-no-yaiba/
-        chapter: 191
+        chapter: 193
       - title: Kengan Omega
         kakalot-url: https://manganelo.com/manga/cd918233
         japscan-url: https://www.japscan.co/manga/kengan-omega/
@@ -77,7 +78,7 @@ app:
       - title: Black Clover
         kakalot-url: https://manganelo.com/manga/black_clover
         japscan-url: https://www.japscan.co/manga/black-clover/
-        chapter: 238
+        chapter: 239
       - title: Boruto
         kakalot-url: https://manganelo.com/manga/boruto_naruto_next_generations
         japscan-url: https://www.japscan.co/manga/boruto/
@@ -92,7 +93,7 @@ app:
       - title: Dr Stone
         kakalot-url: https://manganelo.com/manga/dr_stone
         japscan-url: https://www.japscan.co/manga/dr-stone/
-        chapter: 137
+        chapter: 138
       - title: Dragon Ball Super
         kakalot-url: https://manganelo.com/manga/dragon_ball_super
         japscan-url: https://www.japscan.co/manga/dragon-ball-super/
@@ -111,7 +112,7 @@ app:
       - title: Jujutsu Kaisen
         kakalot-url: https://manganelo.com/manga/jujutsu_kaisen
         japscan-url: https://www.japscan.co/manga/jujutsu-kaisen/
-        chapter: 93
+        chapter: 94
       - title: Ragna Crimson
         kakalot-url: https://manganelo.com/manga/ragna_crimson
         japscan-url: https://www.japscan.co/manga/ragna-crimson/

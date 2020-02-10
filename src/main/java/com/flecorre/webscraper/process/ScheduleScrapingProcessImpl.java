@@ -25,6 +25,9 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     private final TorrentScraperService torrentService;
     private final TelegramService telegramService;
     private final YAMLConfig yamlConfig;
+
+    private int count;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleScrapingProcessImpl.class);
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -38,7 +41,7 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
     }
 
     @Override
-    @Scheduled(fixedRate = 100000000, initialDelay = 5000)
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void scheduleScrappingWithFixedDelay() {
         List<YAMLConfig.Manga> newMangas = new ArrayList<>();
         newMangas.addAll(kakalotService.scrapeData(yamlConfig.getMangas()));
@@ -51,6 +54,6 @@ public class ScheduleScrapingProcessImpl implements ScheduleScrapingProcess {
         if (!movieList.isEmpty()) {
             telegramService.sendMovieUpdate(movieList);
         }
-        LOGGER.info("SCRAPPING DONE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
+        LOGGER.info("SCRAPPING DONE - {} - Execution Time - {}", ++count, dateTimeFormatter.format(LocalDateTime.now()) );
     }
 }

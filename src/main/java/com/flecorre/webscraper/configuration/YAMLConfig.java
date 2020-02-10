@@ -19,6 +19,7 @@ public class YAMLConfig {
     private String omdbKey;
     private String yggtorrentExclus;
     private String chromedriverPath;
+    private String movieList;
     private List<Manga> mangas = new ArrayList<>();
 
     @Data

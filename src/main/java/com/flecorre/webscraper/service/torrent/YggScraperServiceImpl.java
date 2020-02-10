@@ -28,7 +28,10 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     private final RestTemplate restTemplate;
     private Set<String> movieTitleSet;
 
-    private final static String MOVIE_TITLE_TXT = "../movie_title.txt";
+    private final static String VOSTA = "vosta";
+    private final static String VOSTFR = "vostfr";
+    private final static String RESOLUTION_1080 = "1080p";
+    private final static String RESOLUTION_720 = "720p";
     private final static Logger LOGGER = LoggerFactory.getLogger(YggScraperServiceImpl.class);
 
     public YggScraperServiceImpl(RestTemplateBuilder restTemplateBuilder, YAMLConfig yamlConfig) {
@@ -40,6 +43,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     public List<Movie> scrapeData() {
         List<Movie> newMovieList = new ArrayList<>();
         try {
+            LOGGER.info("YGGTORRENT: searching for new movies");
             Document doc = Jsoup.connect(yamlConfig.getYggtorrentExclus()).userAgent(yamlConfig.getUserAgent())
                     .timeout(5000)
                     .get();
@@ -55,13 +59,14 @@ public class YggScraperServiceImpl implements TorrentScraperService {
                         Movie movie = Movie.builder().title(formattedMovieTitle).url(cols.get(1).attr("href")).year(movieYear).build();
                         fetchDataFromOMDB(movie);
                         newMovieList.add(movie);
+                        LOGGER.info("YGGTORRENT: movie found: {} - {}", movie.getTitle(), movie.getYear());
                     }
                 }
             }
             saveNewMovieTitleToFile(this.movieTitleSet);
-            LOGGER.info(newMovieList.toString());
+            LOGGER.info("YGGTORRENT: done searching for new movies");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("YGGTORRENT: error when scrapping {}", e);
         }
         return newMovieList;
     }
@@ -97,7 +102,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     }
 
     private boolean isMovieFormatCorrect(String title) {
-        return !title.contains("vosta") && !title.contains("vostfr") && title.contains("1080");
+        return !title.contains(VOSTA) && !title.contains(VOSTFR) && (title.contains(RESOLUTION_1080) || title.contains(RESOLUTION_720));
     }
 
     private String getYearFromMovieTitle(String title) {
@@ -112,13 +117,13 @@ public class YggScraperServiceImpl implements TorrentScraperService {
 
     private void saveNewMovieTitleToFile(Set<String> movieTitleSet) {
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(MOVIE_TITLE_TXT));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(yamlConfig.getMovieList()));
             for (String title : movieTitleSet) {
                 pw.println(title);
             }
             pw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error("YGGTORRENT: error when writing to text file {}", e);
         }
 
     }
@@ -126,9 +131,9 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     @PostConstruct
     private void initMovieTitleSet() {
         try {
-            File file = new File(MOVIE_TITLE_TXT);
+            File file = new File(yamlConfig.getMovieList());
             if (file.exists()) {
-                this.movieTitleSet = new HashSet<>(FileUtils.readLines(new File(MOVIE_TITLE_TXT), StandardCharsets.UTF_8));
+                this.movieTitleSet = new HashSet<>(FileUtils.readLines(new File(yamlConfig.getMovieList()), StandardCharsets.UTF_8));
             } else {
                 this.movieTitleSet = new HashSet<>();
             }

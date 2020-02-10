@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service("kakalotService")
 public class KakalotScraperServiceImpl implements MangaScraperService {
@@ -25,21 +22,13 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
     }
 
     @Override
-    public List<YAMLConfig.Manga> scrapeData(List<YAMLConfig.Manga> mangaList) {
-        List<YAMLConfig.Manga> newChapters = mangaList.stream()
-                .filter(mg -> !mg.isFound())
-                .map(this::getLastChapter)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-        return newChapters;
-    }
-
-    private YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
+    public YAMLConfig.Manga getLastChapter(YAMLConfig.Manga manga) {
         if (manga.getKakalotUrl() == null) {
             return null;
         }
         YAMLConfig.Manga newManga = null;
         try {
+            LOGGER.info("KAKALOT: searching for {}", manga.getTitle());
             Document document = Jsoup.connect(manga.getKakalotUrl()).userAgent(yamlConfig.getUserAgent())
                     .timeout(5000)
                     .get();
@@ -51,10 +40,12 @@ public class KakalotScraperServiceImpl implements MangaScraperService {
                 if (manga.getChapter() < chapterFound) {
                     updateChapterInList(manga, chapterFound, this.yamlConfig.getMangas());
                     newManga = YAMLConfig.Manga.builder().title(manga.getTitle()).chapter(chapterFound).foundChapterUrl(fullChapterUrl).build();
+                    LOGGER.info("KAKALOT: new chapter found: " + newManga.getTitle() + " - " + newManga.getChapter());
                 }
             }
+            LOGGER.info("KAKALOT: done searching for {}", manga.getTitle());
         } catch (IOException e) {
-            LOGGER.error(e + " " + manga.getKakalotUrl());
+            LOGGER.error("JAPSCAN: error with {}", manga.getJapscanUrl());
         }
         return newManga;
     }

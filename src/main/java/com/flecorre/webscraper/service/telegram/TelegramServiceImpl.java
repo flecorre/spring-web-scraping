@@ -29,22 +29,24 @@ public class TelegramServiceImpl implements TelegramService {
     @Override
     public void sendMovieUpdate(List<Movie> movieList) {
         for (Movie movie : movieList) {
+            LOGGER.info("TELEGRAM: Preparing movie message for {}", movie.getTitle());
             SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMovieToHTML(movie))
                     .parseMode(ParseMode.HTML)
                     .disableWebPagePreview(false);
             bot.execute(msg);
-            LOGGER.info("SEND MOVIE UPDATE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+            LOGGER.info("TELEGRAM: movie message sent for {} - Execution Time - {}", movie.getTitle(), dateTimeFormatter.format(LocalDateTime.now()));
         }
     }
 
     @Override
     public void sendMangaUpdate(List<YAMLConfig.Manga> mangaList) {
         for (YAMLConfig.Manga manga : mangaList) {
+            LOGGER.info("TELEGRAM: preparing manga message for {}", manga.getTitle());
             SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMangaListToHTML(manga))
                     .parseMode(ParseMode.HTML)
                     .disableWebPagePreview(false);
             bot.execute(msg);
-            LOGGER.info("SEND MANGA UPDATE - Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+            LOGGER.info("TELEGRAM: manga message sent for {} - Execution Time - {}", manga.getTitle(), dateTimeFormatter.format(LocalDateTime.now()));
         }
     }
 
