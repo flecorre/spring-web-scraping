@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.flecorre</groupId>
 	<artifactId>webscraper</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>webscraper</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -67,7 +67,13 @@
 			<version>2.6</version>
 		</dependency>
 
-        <dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.6</version>
+		</dependency>
+
+		<dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>

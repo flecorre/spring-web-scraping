@@ -1,4 +1,4 @@
-package com.flecorre.webscraper.service.telegram;
+package com.flecorre.webscraper.service.technical;
 
 import com.flecorre.webscraper.configuration.YAMLConfig;
 import com.flecorre.webscraper.domain.Movie;
@@ -33,7 +33,7 @@ public class TelegramServiceImpl implements TelegramService {
             SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMovieToHTML(movie))
                     .parseMode(ParseMode.HTML)
                     .disableWebPagePreview(false);
-            bot.execute(msg);
+            this.bot.execute(msg);
             LOGGER.info("TELEGRAM: movie message sent for {} - Execution Time - {}", movie.getTitle(), dateTimeFormatter.format(LocalDateTime.now()));
         }
     }
@@ -45,9 +45,15 @@ public class TelegramServiceImpl implements TelegramService {
             SendMessage msg = new SendMessage(yamlConfig.getChatId(), formatMangaListToHTML(manga))
                     .parseMode(ParseMode.HTML)
                     .disableWebPagePreview(false);
-            bot.execute(msg);
+            this.bot.execute(msg);
             LOGGER.info("TELEGRAM: manga message sent for {} - Execution Time - {}", manga.getTitle(), dateTimeFormatter.format(LocalDateTime.now()));
         }
+    }
+
+    @Override
+    public void sendError(String errorMessage) {
+        SendMessage msg = new SendMessage(yamlConfig.getChatId(), errorMessage);
+        this.bot.execute(msg);
     }
 
     private String formatMangaListToHTML(YAMLConfig.Manga manga) {

@@ -1,4 +1,4 @@
-package com.flecorre.webscraper.service.manga;
+package com.flecorre.webscraper.service.business.manga;
 
 import com.flecorre.webscraper.configuration.YAMLConfig;
 

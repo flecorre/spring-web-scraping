@@ -1,4 +1,4 @@
-package com.flecorre.webscraper.service.telegram;
+package com.flecorre.webscraper.service.technical;
 
 import com.flecorre.webscraper.configuration.YAMLConfig;
 import com.flecorre.webscraper.domain.Movie;
@@ -10,5 +10,7 @@ public interface TelegramService {
     void sendMovieUpdate(List<Movie> movieList);
 
     void sendMangaUpdate(List<YAMLConfig.Manga> mangaList);
+
+    void sendError(String errorMessage);
 
 }

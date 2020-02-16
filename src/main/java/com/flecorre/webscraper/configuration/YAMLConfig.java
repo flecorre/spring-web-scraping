@@ -19,6 +19,7 @@ public class YAMLConfig {
     private String omdbKey;
     private String yggtorrentExclus;
     private String chromedriverPath;
+    private String chromedriver;
     private String movieList;
     private List<Manga> mangas = new ArrayList<>();
 
@@ -30,6 +31,7 @@ public class YAMLConfig {
         private String title;
         private String kakalotUrl;
         private String japscanUrl;
+        private String jaiminiUrl;
         private int chapter;
         private String foundChapterUrl;
         private boolean found;

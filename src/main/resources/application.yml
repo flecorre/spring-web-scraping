@@ -2,23 +2,23 @@ app:
     user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36
     chat-id:
     telegram-token:
-    omdb-key:
+    omdb-key: 
     yggtorrent-exclus: https://www2.yggtorrent.se/torrents/exclus
-    movie-list: ../movies.txt
-    chromedriver-path: ../chromedriver.exe
+    chromedriver: webdriver.chrome.driver
     mangas:
       - title: Fire Force
         kakalot-url: https://manganelo.com/manga/xqfw3591566265037
         japscan-url: https://www.japscan.co/manga/fire-brigade-of-flames/
-        chapter: 205
+        jaimini-url: https://jaiminisbox.com/reader/series/fire-force/
+        chapter: 206
       - title: Jagaaaaaan
         kakalot-url: https://manganelo.com/manga/eupo237211575286777
         japscan-url: https://www.japscan.co/manga/jagaaaaaan/
-        chapter: 88
+        chapter: 91
       - title: The God of High School
         kakalot-url: https://manganelo.com/manga/read_the_god_of_high_school_manga
         japscan-url: https://www.japscan.co/manga/the-god-of-high-school/
-        chapter: 450
+        chapter: 451
       - title: UQ Holder!
         kakalot-url: https://manganelo.com/manga/read_uq_holder_manga_online_for_free
         japscan-url: https://www.japscan.co/manga/uq-holder/
@@ -26,14 +26,14 @@ app:
       - title: Neverland
         kakalot-url: https://manganelo.com/manga/yakusoku_no_neverland
         japscan-url: https://www.japscan.co/manga/the-promised-neverland/
-        chapter: 166
+        chapter: 167
       - title: Record of Ragnarok
         kakalot-url: https://manganelo.com/manga/vy918232
         chapter: 27
       - title: Radiant
         kakalot-url: https://manganelo.com/manga/radiant
         japscan-url: https://www.japscan.co/manga/radiant/
-        chapter: 94
+        chapter: 100
       - title: Onepunch-Man (ONE)
         kakalot-url: https://manganelo.com/manga/read_onepunchman_one
         chapter: 121
@@ -44,37 +44,38 @@ app:
       - title: One Piece
         kakalot-url: https://manganelo.com/manga/read_one_piece_manga_online_free4
         japscan-url: https://www.japscan.co/manga/one-piece/
-        chapter: 970
+        chapter: 971
       - title: New Prince of Tennis
         kakalot-url: https://manganelo.com/manga/new_prince_of_tennis
         chapter: 250
       - title: Nanatsu No Taizai
         kakalot-url: https://manganelo.com/manga/read_nanatsu_no_taizai_manga_online_free
         japscan-url: https://www.japscan.co/manga/nanatsu-no-taizai/
-        chapter: 340
+        jaimini-url: https://jaiminisbox.com/reader/series/nanatsu_no_taizai/
+        chapter: 341
       - title: My Hero Academia
         kakalot-url: https://manganelo.com/manga/read_boku_no_hero_academia_manga
         japscan-url: https://www.japscan.co/manga/my-hero-academia/
-        chapter: 260
+        chapter: 261
       - title: Demon Slayer
         kakalot-url: https://manganelo.com/manga/kimetsu_no_yaiba
         japscan-url: https://www.japscan.co/manga/kimetsu-no-yaiba/
-        chapter: 193
+        chapter: 194
       - title: Kengan Omega
         kakalot-url: https://manganelo.com/manga/cd918233
         japscan-url: https://www.japscan.co/manga/kengan-omega/
-        chapter: 49
+        chapter: 50
       - title: Jigokuraku
         kakalot-url: https://manganelo.com/manga/jigokuraku_kaku_yuuji
         japscan-url: https://www.japscan.co/manga/paradition/
-        chapter: 85
+        chapter: 86
       - title: Heart Gear
         kakalot-url: https://manganelo.com/manga/no919133
         chapter: 19
       - title: Hajime No Ippo
         kakalot-url: https://manganelo.com/manga/read_hajime_no_ippo_manga
         japscan-url: https://www.japscan.co/manga/hajime-no-ippo/
-        chapter: 1288
+        chapter: 1289
       - title: Black Clover
         kakalot-url: https://manganelo.com/manga/black_clover
         japscan-url: https://www.japscan.co/manga/black-clover/
@@ -86,14 +87,14 @@ app:
       - title: Chainsaw Man
         kakalot-url: https://manganelo.com/manga/ix917953
         japscan-url: https://www.japscan.co/manga/chainsaw-man/
-        chapter: 57
+        chapter: 58
       - title: Dai Dark
         kakalot-url: https://manganelo.com/manga/sg919827
         chapter: 9
       - title: Dr Stone
         kakalot-url: https://manganelo.com/manga/dr_stone
         japscan-url: https://www.japscan.co/manga/dr-stone/
-        chapter: 138
+        chapter: 139
       - title: Dragon Ball Super
         kakalot-url: https://manganelo.com/manga/dragon_ball_super
         japscan-url: https://www.japscan.co/manga/dragon-ball-super/
@@ -101,18 +102,20 @@ app:
       - title: Fairy Tail 100 Years Quest
         kakalot-url: https://manganelo.com/manga/uv917720
         japscan-url: https://www.japscan.co/manga/fairy-tail-100-years-quest/
-        chapter: 48
+        chapter: 49
       - title: Tomb Raider King
         kakalot-url: https://manganelo.com/manga/eg919734
+        jaimini-url: https://jaiminisbox.com/reader/series/tomb-raider-king/
         chapter: 37
       - title: Solo Leveling
         kakalot-url: https://manganelo.com/manga/pn918005
         japscan-url: https://www.japscan.co/manga/solo-leveling/
-        chapter: 104
+        jaimini-url: https://jaiminisbox.com/reader/series/solo-leveling/
+        chapter: 105
       - title: Jujutsu Kaisen
         kakalot-url: https://manganelo.com/manga/jujutsu_kaisen
         japscan-url: https://www.japscan.co/manga/jujutsu-kaisen/
-        chapter: 94
+        chapter: 95
       - title: Ragna Crimson
         kakalot-url: https://manganelo.com/manga/ragna_crimson
         japscan-url: https://www.japscan.co/manga/ragna-crimson/
@@ -121,3 +124,21 @@ app:
         kakalot-url: https://manganelo.com/manga/candy_cigarettes
         japscan-url: https://www.japscan.co/manga/candy-cigarettes/
         chapter: 9
+      - title: Gantz-E
+        jaimini-url: https://jaiminisbox.com/reader/series/gantz-e/
+        chapter: 2
+---
+
+spring:
+  profiles: dev
+app:
+    movie-list: ../movies.txt
+    chromedriver-path: ../chromedriver.exe
+
+---
+
+spring:
+  profiles: prod
+app:
+    movie-list: ./movies.txt
+    chromedriver-path: ./chromedriver

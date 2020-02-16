@@ -1,5 +1,6 @@
-package com.flecorre.webscraper.service.torrent;
+package com.flecorre.webscraper.service.business.torrent;
 
+import com.flecorre.webscraper.Exception.ScraperException;
 import com.flecorre.webscraper.configuration.YAMLConfig;
 import com.flecorre.webscraper.domain.Movie;
 import com.flecorre.webscraper.domain.ResponseOMDB;
@@ -40,7 +41,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
     }
 
     @Override
-    public List<Movie> scrapeData() {
+    public List<Movie> scrapeData() throws ScraperException {
         List<Movie> newMovieList = new ArrayList<>();
         try {
             LOGGER.info("YGGTORRENT: searching for new movies");
@@ -67,6 +68,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
             LOGGER.info("YGGTORRENT: done searching for new movies");
         } catch (IOException e) {
             LOGGER.error("YGGTORRENT: error when scrapping {}", e);
+            throw new ScraperException(ScraperException.ScraperError.YGGTORRENT, e.getMessage());
         }
         return newMovieList;
     }
@@ -115,7 +117,7 @@ public class YggScraperServiceImpl implements TorrentScraperService {
         return year;
     }
 
-    private void saveNewMovieTitleToFile(Set<String> movieTitleSet) {
+    private void saveNewMovieTitleToFile(Set<String> movieTitleSet) throws ScraperException {
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(yamlConfig.getMovieList()));
             for (String title : movieTitleSet) {
@@ -124,12 +126,13 @@ public class YggScraperServiceImpl implements TorrentScraperService {
             pw.close();
         } catch (FileNotFoundException e) {
             LOGGER.error("YGGTORRENT: error when writing to text file {}", e);
+            throw new ScraperException(ScraperException.ScraperError.YGGTORRENT, e.getMessage());
         }
 
     }
 
     @PostConstruct
-    private void initMovieTitleSet() {
+    private void initMovieTitleSet() throws ScraperException {
         try {
             File file = new File(yamlConfig.getMovieList());
             if (file.exists()) {
@@ -138,7 +141,8 @@ public class YggScraperServiceImpl implements TorrentScraperService {
                 this.movieTitleSet = new HashSet<>();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("YGGTORRENT: error when initializing movie list file {}", e);
+            throw new ScraperException(ScraperException.ScraperError.YGGTORRENT, e.getMessage());
         }
     }
 }
