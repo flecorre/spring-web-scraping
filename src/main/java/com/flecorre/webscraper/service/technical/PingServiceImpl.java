@@ -43,13 +43,18 @@ public class PingServiceImpl implements PingService {
     @Override
     public boolean isReachableWithSelenium(String url) {
         boolean isReachable = false;
+        WebDriver driver = null;
         try {
-            WebDriver driver = getWebDriver();
+            driver = getWebDriver();
             driver.get(url);
             Thread.sleep(7000);
             isReachable = driver.findElements(By.cssSelector("body > div.container > nav > a")).size() > 0;
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
         }
         return isReachable;
     }
